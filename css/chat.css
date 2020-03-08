@@ -1,0 +1,124 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+}
+
+html {
+      height: 100%;
+      width: 100%;
+}
+
+body {
+      font: 13px Helvetica, Arial;
+      height: 100%;
+      width: 100%;
+}
+
+#main-container {
+      width: 100%;
+      
+}
+
+#messages-users-container {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+
+}
+
+#messages-container {
+      height: 85vh;
+      padding: 0;
+      left: 0;
+      overflow: auto;
+      max-width: 99%;
+      width: 99%;
+}
+
+#users {
+      width: auto;
+      align-self: flex-end;
+      
+}
+
+#users_tab {
+      width: auto;
+      text-align: right;
+}
+
+#users li {
+      list-style-type: none; 
+      margin-bottom: 0.5rem;
+}
+
+#error, #name, #input {
+      width: 100%;
+}
+
+#error {
+      color: firebrick;
+      font-weight: bold;
+      margin-left: 10px;
+      margin-bottom: 5px;
+      height: 1em;
+}
+
+#name {
+      margin-left: 10px;
+}
+
+#nickname {
+      margin-left: 0.5rem;
+      font-weight: bold;
+}
+
+#messages {
+      max-height: 100%;
+      vertical-align: bottom;
+      width: 99%;
+      
+      
+      overflow: auto;
+}
+
+form {
+      background: #000; 
+      padding: 3px; 
+      width: 100%;
+      position: relative;
+      bottom: 0;
+}
+
+
+form input {
+      border: 0; 
+      padding: 10px; 
+      width: 90%; 
+      margin-right: .5%; 
+      height: 100%;
+}
+
+form button { 
+      width: 9%; 
+      background: rgb(130, 224, 255); 
+      border: none; 
+      padding: 10px; 
+}
+
+#messages_list { 
+      list-style-type: none; 
+      margin: 0; 
+      padding: 0; 
+      vertical-align: bottom;
+      /* position: absolute;
+      bottom: 0; */
+}
+
+#messages_list li { 
+      padding: 5px 10px; 
+}
+
+#messages_list li:nth-child(odd) { 
+      background: #eee; 
+}
