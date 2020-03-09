@@ -1,3 +1,9 @@
+/*
+SENG 513 Assignment 3
+Maryam Sohrabi 10077637
+Lab section B04
+*/
+
 let nickname;
 let color = "black";
 
@@ -20,7 +26,6 @@ $(function () {
         // get nickname and color cookies
         nickname = getCookie("nickname");
         color = getCookie("color") || "black";
-        //console.log("nickname: " + nickname + ", color: " + color);
 
         let socket = io();
 
@@ -83,7 +88,7 @@ $(function () {
 
                     // show any messages from this user's nickname in bold
                     if (args.messages[i]["sender"] == nickname) {
-                        $("#messages_list").append($("<li>").html(
+                        $("#messages_list").append($("<li>").addClass("me").html(
                             moment(args.messages[i]["timestamp"]).format("HH:mm") + " <b><font color='" + args.messages[i]["color"] + "'>" + args.messages[i]["sender"] + "</font>: " + args.messages[i]["message"] + "</b>"));
 
                     } else {
@@ -106,7 +111,7 @@ $(function () {
 
         // actions for when a user leaves the chat
         socket.on("user disconnected", function (args) {
-            $("#messages_list").append($("<li>").html(args["nickname"] + " has left the chat!"));
+            $("#messages_list").append($("<li>").html(args["user"] + " has left the chat!"));
             bottom.scrollIntoView(false);
         });
 
@@ -135,13 +140,12 @@ $(function () {
         socket.on("chat message", function (args) {
             // display the chat message
             if (args.sender == nickname) {
-                $("#messages_list").append($("<li>").html(
+                $("#messages_list").append($("<li>").addClass("me").html(
                     moment(args["timestamp"]).format("HH:mm") + " <b><font color=\"" + args["color"] + "\">" + args["sender"] + "</font>: " + args["message"] + "</b>"));
             } else {
                 $("#messages_list").append($("<li>").html(
                     moment(args["timestamp"]).format("HH:mm") + " <b><font color=\"" + args["color"] + "\">" + args["sender"] + "</font></b>: " + args["message"]));
             }
-
 
             // keep chat scrolled to the bottom
             bottom.scrollIntoView(false);
@@ -195,7 +199,6 @@ function getCookie(cname) {
     }
     return "";
 }
-
 
 // https://stackoverflow.com/questions/8027423/how-to-check-if-a-string-is-a-valid-hex-color-representation/8027444
 function isHexColor(hex) {

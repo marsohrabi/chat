@@ -1,13 +1,20 @@
+<!-- 
+SENG 513 Assignment 3
+Maryam Sohrabi 10077637
+Lab section B04
+-->
+
 <!DOCTYPE HTML>
 <html>
   <head>
     <title>Chat</title>
-    <link rel="stylesheet" href="/css/chat.css">
-    <link rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-free/css/all.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
-          crossorigin="anonymous">
     
+    <link rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+  	<link rel="stylesheet" href="/css/chat.css">
+
   </head>
   <body>
     <div class="container-fluid" id="main-container">
@@ -21,58 +28,34 @@
           </div>
         </div>
         <div id="users_tab">
-          <div id="users_btn" onclick="toggle_users()" style="text-align: end;"><i class="fas fa-user-friends"></i></div>
-          
+          <div id="users_btn" onclick="toggle_users()" alt="Click to show/hide"><i class="fas fa-user-friends"></i></div>
+
           <ul id="users"></ul>
         </div>
       </div>
-      
+
       <div class="row" id="error"></div>
       <div class="row" id="name">Chatting as<div id="nickname"></div> :</div>
       <div class="row" id="input">
         <div class="col-12">
-          <form action="">
-            <input id="m" autocomplete="off" /><button><i class="fas fa-paper-plane"></i></button>
+          <form action="" id="form">
+            <input id="m" autocomplete="off" /><button class="btn btn-success"><i class="fas fa-paper-plane"></i></button>
           </form>
         </div>
       </div>
       <div class="row" id="errors"></div>
     </div>
 
-    <!--
-      <div class="row no-gutters" id="main-panel">
-        <div class="col-8" id="messages">
-          <ul id="messages_list"></ul>
-        </div>
-        <div class="col-4" id="users">
-          <ul>
-            <li>User 1</li>
-            <li>User 2</li>
-          </ul>
-          
-        </div>
-      </div>
-   
-      <div class="row no-gutters" id="message_input">
-        <div class="col-12">
-          <form action="">
-            <input id="m" autocomplete="off" /><button>Send</button>
-          </form>
-        </div>
-        
-      </div>
-      -->
-
     <script src="/node_modules/moment/moment.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" 
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
             crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" 
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <script src="/js/client.js"></script>
   </body>

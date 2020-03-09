@@ -1,3 +1,9 @@
+/*
+SENG 513 Assignment 3
+Maryam Sohrabi 10077637
+Lab section B04
+*/
+
 const express = require("express");
 const app = express();
 const name_generator = require("adjective-adjective-animal");
@@ -8,7 +14,7 @@ let io = require("socket.io")(http);
 let message_buffer = [];
 let active_users = [];
 
-
+// serve static files from this same directory
 app.use(express.static(__dirname));
 
 app.get("/", function (req, res) {
@@ -21,7 +27,6 @@ io.on("connection", function (socket) {
 
 
   socket.on("chat message", function (args) {
-    //console.log("Received a message");
     // add sender, color, and message to buffer
     let this_message = {};
     this_message["timestamp"] = moment();
@@ -39,7 +44,6 @@ io.on("connection", function (socket) {
 
     let timestamp = moment();
 
-
     // emit message to all connected sockets
     io.emit("chat message", { sender: args["sender"], message: args["message"], color: args["color"], timestamp: timestamp });
 
@@ -54,13 +58,9 @@ io.on("connection", function (socket) {
     console.log(socket["nickname"] + " disconnected");
   });
 
-  // set nickname
-
+  // new socket setup actions
   socket.on("setup", function (args) {
 
-    
-
-    
       let new_user_nickname = "";
       if (args["nickname"]) {
         // if a nickname is specified, check if it"s available
@@ -77,6 +77,8 @@ io.on("connection", function (socket) {
             io.emit("new user", { nickname: new_user_nickname });
             send_user_list();
             socket["nickname"] = new_user_nickname;
+            
+            send_log(socket);
           });
         } else {
           // the nickname is available
@@ -90,6 +92,8 @@ io.on("connection", function (socket) {
           io.emit("new user", { nickname: new_user_nickname });
           send_user_list();
           socket["nickname"] = new_user_nickname;
+          
+          send_log(socket);
         }
       } else {
         name_generator(1).then(function (generated_name) {
@@ -103,27 +107,17 @@ io.on("connection", function (socket) {
           io.emit("new user", { nickname: new_user_nickname });
           send_user_list();
           socket["nickname"] = new_user_nickname;
+          
+          send_log(socket);
         });
       }
 
-      if (message_buffer.length > 0) {
-        socket.emit("chat log", { messages: message_buffer });
-      } else {
-        socket.emit("chat log", { messages: false });
-      }
-
-      //socket["nickname"] = new_user_nickname;
-
-
-      //log_users();
-
-
+      
 
   });
 
 
   socket.on("set nickname", function (args) {
-    log_users();
     if (active_users.includes(args["new"])) {
       // the nickname is not available
       socket.emit("chat error", { message: "This nickname is already taken." });
@@ -145,6 +139,14 @@ io.on("connection", function (socket) {
 http.listen(3000, function () {
   console.log("listening on *:3000");
 });
+
+function send_log(socket) {
+	if (message_buffer.length > 0) {
+        socket.emit("chat log", { messages: message_buffer });
+      } else {
+        socket.emit("chat log", { messages: false });
+      }
+}
 
 function log_users() {
   console.log(active_users);

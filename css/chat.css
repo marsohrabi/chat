@@ -1,3 +1,9 @@
+/*
+SENG 513 Assignment 3
+Maryam Sohrabi 10077637
+Lab section B04
+*/
+
 * {
       margin: 0;
       padding: 0;
@@ -10,24 +16,29 @@ html {
 }
 
 body {
-      font: 13px Helvetica, Arial;
+      font: 16px Helvetica, Arial;
       height: 100%;
       width: 100%;
 }
 
+.container-fluid {
+	position: relative;
+}
 #main-container {
       width: 100%;
-      
+      position: relative;
 }
 
 #messages-users-container {
       display: flex;
       flex-wrap: nowrap;
       justify-content: flex-end;
+      position: relative;
 
 }
 
 #messages-container {
+	position: relative;
       height: 85vh;
       padding: 0;
       left: 0;
@@ -36,10 +47,27 @@ body {
       width: 99%;
 }
 
+#messages {
+position: absolute;
+bottom: 0;
+      max-height: 100%;
+      vertical-align: bottom;
+      width: 99%;
+      overflow: auto;
+}
+
 #users {
       width: auto;
       align-self: flex-end;
-      
+
+}
+
+#users_btn {
+	color: #379152;
+	margin-top: 10px;
+	border-bottom: 1px dashed #379152;
+	margin-bottom: 10px;
+	text-align: end;
 }
 
 #users_tab {
@@ -48,7 +76,7 @@ body {
 }
 
 #users li {
-      list-style-type: none; 
+      list-style-type: none;
       margin-bottom: 0.5rem;
 }
 
@@ -57,8 +85,9 @@ body {
 }
 
 #error {
-      color: firebrick;
+      color: #EE6352;
       font-weight: bold;
+      margin-top: 10px;
       margin-left: 10px;
       margin-bottom: 5px;
       height: 1em;
@@ -73,18 +102,10 @@ body {
       font-weight: bold;
 }
 
-#messages {
-      max-height: 100%;
-      vertical-align: bottom;
-      width: 99%;
-      
-      
-      overflow: auto;
-}
+
 
 form {
-      background: #000; 
-      padding: 3px; 
+      padding: 3px;
       width: 100%;
       position: relative;
       bottom: 0;
@@ -92,33 +113,45 @@ form {
 
 
 form input {
-      border: 0; 
-      padding: 10px; 
-      width: 90%; 
-      margin-right: .5%; 
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 10px;
+      width: 90%;
+      margin-right: .5%;
       height: 100%;
 }
 
-form button { 
-      width: 9%; 
-      background: rgb(130, 224, 255); 
-      border: none; 
-      padding: 10px; 
+form button {
+      width: 9%;
+      border: none;
+      padding: 10px;
+      height: 100%;
 }
 
-#messages_list { 
-      list-style-type: none; 
-      margin: 0; 
-      padding: 0; 
+#messages_list {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
       vertical-align: bottom;
-      /* position: absolute;
-      bottom: 0; */
+
 }
 
-#messages_list li { 
-      padding: 5px 10px; 
+
+#messages_list li {
+      padding: 5px 10px;
+      margin-bottom: 5px;
+      border: 2px solid #28bf53;
+      background-color: #e9ffde;
+      border-radius: 10px;
+      width: auto;
 }
 
-#messages_list li:nth-child(odd) { 
-      background: #eee; 
+#messages_list .me {
+      border: 2px solid #35A7FF;
+      background-color: #cfeaff;
+
+}
+
+#messages_list li:nth-child(odd):not(.me) {
+      background: #fff;
 }
