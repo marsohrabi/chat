@@ -99,8 +99,8 @@ $(function () {
                 }
             }
 
-                // keep chat scrolled to the bottom
-                bottom.scrollIntoView(false);
+            // keep chat scrolled to the bottom
+            bottom.scrollIntoView(false);
         });
 
         // actions for when a new user joins the chat

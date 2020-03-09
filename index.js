@@ -25,7 +25,6 @@ io.on("connection", function (socket) {
 
   console.log("a user connected");
 
-
   socket.on("chat message", function (args) {
     // add sender, color, and message to buffer
     let this_message = {};
@@ -49,6 +48,7 @@ io.on("connection", function (socket) {
 
   });
 
+  // update list of users and send update to all connected sockets
   socket.on("disconnect", function () {
     active_users.splice(active_users.indexOf(socket.username));
     io.emit("user disconnected", { user: socket.nickname });
@@ -61,44 +61,14 @@ io.on("connection", function (socket) {
   // new socket setup actions
   socket.on("setup", function (args) {
 
-      let new_user_nickname = "";
-      if (args["nickname"]) {
-        // if a nickname is specified, check if it"s available
-        if (active_users.includes(args["nickname"])) {
-          // the nickname is not available, so get a random nickname and assign that to the user
-          name_generator(1).then(function (generated_name) {
-            active_users.push(generated_name);
-            socket.emit("nickname set", { nickname: generated_name, error: "Your old nickname is already taken. You've been named " + generated_name + " instead." });
-            new_user_nickname = generated_name;
-
-            socket["nickname"] = new_user_nickname;
-
-            // let all connected sockets know that a new user has joined
-            io.emit("new user", { nickname: new_user_nickname });
-            send_user_list();
-            socket["nickname"] = new_user_nickname;
-            
-            send_log(socket);
-          });
-        } else {
-          // the nickname is available
-          active_users.push(args["nickname"]);
-          socket.emit("nickname set", { nickname: args["nickname"] });
-          new_user_nickname = args["nickname"];
-
-          socket["nickname"] = new_user_nickname;
-
-          // let all connected sockets know that a new user has joined
-          io.emit("new user", { nickname: new_user_nickname });
-          send_user_list();
-          socket["nickname"] = new_user_nickname;
-          
-          send_log(socket);
-        }
-      } else {
+    let new_user_nickname = "";
+    if (args["nickname"]) {
+      // if a nickname is specified, check if it"s available
+      if (active_users.includes(args["nickname"])) {
+        // the nickname is not available, so get a random nickname and assign that to the user
         name_generator(1).then(function (generated_name) {
           active_users.push(generated_name);
-          socket.emit("nickname set", { nickname: generated_name });
+          socket.emit("nickname set", { nickname: generated_name, error: "Your old nickname is already taken. You've been named " + generated_name + " instead." });
           new_user_nickname = generated_name;
 
           socket["nickname"] = new_user_nickname;
@@ -107,15 +77,41 @@ io.on("connection", function (socket) {
           io.emit("new user", { nickname: new_user_nickname });
           send_user_list();
           socket["nickname"] = new_user_nickname;
-          
+
           send_log(socket);
         });
+      } else {
+        // the nickname is available
+        active_users.push(args["nickname"]);
+        socket.emit("nickname set", { nickname: args["nickname"] });
+        new_user_nickname = args["nickname"];
+
+        socket["nickname"] = new_user_nickname;
+
+        // let all connected sockets know that a new user has joined
+        io.emit("new user", { nickname: new_user_nickname });
+        send_user_list();
+        socket["nickname"] = new_user_nickname;
+
+        send_log(socket);
       }
+    } else {
+      name_generator(1).then(function (generated_name) {
+        active_users.push(generated_name);
+        socket.emit("nickname set", { nickname: generated_name });
+        new_user_nickname = generated_name;
 
-      
+        socket["nickname"] = new_user_nickname;
 
+        // let all connected sockets know that a new user has joined
+        io.emit("new user", { nickname: new_user_nickname });
+        send_user_list();
+        socket["nickname"] = new_user_nickname;
+
+        send_log(socket);
+      });
+    }
   });
-
 
   socket.on("set nickname", function (args) {
     if (active_users.includes(args["new"])) {
@@ -141,11 +137,11 @@ http.listen(3000, function () {
 });
 
 function send_log(socket) {
-	if (message_buffer.length > 0) {
-        socket.emit("chat log", { messages: message_buffer });
-      } else {
-        socket.emit("chat log", { messages: false });
-      }
+  if (message_buffer.length > 0) {
+    socket.emit("chat log", { messages: message_buffer });
+  } else {
+    socket.emit("chat log", { messages: false });
+  }
 }
 
 function log_users() {
